@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class ThlObjects {
     private static ThlObjects instance = null;
     private ArrayList<ThlObject>thlObjects;
+    private boolean initialized = false;
 
     private ThlObjects(){
         thlObjects = new ArrayList<ThlObject>();
@@ -16,9 +17,13 @@ public class ThlObjects {
             instance = new ThlObjects();
         }return instance;
     }
+    public boolean isInitialized(){
+        return initialized;
+    }
 
     public void insertThlObject(ThlObject o){
         thlObjects.add(o);
+        initialized = true;
     }
 
     class ThlObject{

@@ -13,6 +13,7 @@
         android:theme="@style/Theme.Harjoitustyo">
         <activity
             android:name=".MainActivity"
+            android:theme="@style/Theme.Harjoitustyo.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
