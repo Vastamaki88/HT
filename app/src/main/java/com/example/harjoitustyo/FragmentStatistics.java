@@ -2,57 +2,59 @@ package com.example.harjoitustyo;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentStatistics#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
+
 public class FragmentStatistics extends Fragment {
+    TextView textViewCases7d;
+    TextView textViewCases14d;
+    TextView textViewCases30d;
+    TextView textViewCases100d;
+    TextView textViewCasesTotal;
+    TextView textViewSex;
+    TextView textViewRegion;
+    TextView textViewCity;
+    TextView textViewAge;
+    TextView textViewSensor;
+    StatisticsData SD;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public FragmentStatistics() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentStatistics.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentStatistics newInstance(String param1, String param2) {
-        FragmentStatistics fragment = new FragmentStatistics();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        textViewCases7d = this.getView().findViewById(R.id.cases_7days);
+        textViewCases14d = this.getView().findViewById(R.id.cases_14days);
+        textViewCases30d = this.getView().findViewById(R.id.cases_30days);
+        textViewCases100d = this.getView().findViewById(R.id.cases_100days);
+        textViewCasesTotal = this.getView().findViewById(R.id.cases_total);
+        //Data info
+        textViewSex = this.getView().findViewById(R.id.statistics_sex2);
+        textViewRegion = this.getView().findViewById(R.id.statistics_region2);
+        textViewCity = this.getView().findViewById(R.id.statistics_city2);
+        textViewAge = this.getView().findViewById(R.id.statistics_age2);
+        textViewSensor = this.getView().findViewById(R.id.statistics_sensor2);
+
+        SD = StatisticsData.getInstance();
+        textViewSex.setText(SD.getSex());
+        textViewAge.setText(SD.getAge());
+        textViewRegion.setText(SD.getRegion());
+        textViewCity.setText(SD.getCity());
+        textViewSensor.setText(SD.getSensor());
+
+        casesInPrevDays(7,textViewCases7d);
+        casesInPrevDays(14,textViewCases14d);
+        casesInPrevDays(30,textViewCases30d);
+        casesInPrevDays(100,textViewCases100d);
+        casesTotal(textViewCasesTotal);
     }
 
     @Override
@@ -61,4 +63,11 @@ public class FragmentStatistics extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_statistics, container, false);
     }
-}
+    public void casesInPrevDays(int i, TextView textView) {
+        ArrayList<ThlObjects.ThlObject.Children> ThlDayObjectList = DateClass.getInstance().getDaysFromNow(i);
+        ProcessData.getInstance().GetCumulativeCasesCount(ThlDayObjectList, String.valueOf(IDClass.getInstance().getNewID()),textView);
+    }
+    public void casesTotal(TextView t){
+        ProcessData.getInstance().getCasesTotal(t, "totalCases");
+    }
+    }

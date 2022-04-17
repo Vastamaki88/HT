@@ -7,5 +7,19 @@
     <string name="statistics">Statistics</string>
     <string name="create_graph">Create Graph</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="total_cases">Number of cases</string>
+    <string name="cases_total">Total</string>
+    <string name="cases_7days">7 days</string>
+    <string name="cases_14days">14 days</string>
+    <string name="cases_30days">30 days</string>
+    <string name="cases_100days">100 days</string>
+
+    <string name="header_statistics">Coronavirus Statistics</string>
+
+    <string name="statistics_region">Region</string>
+    <string name="statistics_city">City</string>
+    <string name="statistics_sensor">Sensor</string>
+    <string name="statistics_age">Age</string>
+    <string name="statistics_sex">Sex</string>
+
+
 </resources>

@@ -25,12 +25,21 @@ public class ThlObjects {
         thlObjects.add(o);
         initialized = true;
     }
+    public int objectsCount(){
+        return thlObjects.size();
+    }
+    public ThlObject getThlObject(int i){
+        return thlObjects.get(i);
+    }
 
     class ThlObject{
         String id;
         String label;
         ArrayList<Children>children;
 
+        public ArrayList<Children> getChildren(){
+            return children;
+        }
 
         class Children{
             String id;
@@ -41,7 +50,30 @@ public class ThlObjects {
             String sort;
             String uri;
             ArrayList<Children>children;
+            public String getSid(){
+                return sid;
+            }
+            public ArrayList<Children> getChildren(){
+                return children;
+            }
+            public String getLabel(){
+                return label;
+            }
+            public String getID(){return id;}
         }
+    }
+    public ArrayList<String>getRegions(){
+        ArrayList<String>regions = new ArrayList<>();
+        try{
+            ArrayList<ThlObject.Children> regionObjects = ThlObjects.getInstance().getThlObject(0).getChildren();
+            System.out.println("hold");
+        }catch (Exception e){
+            System.out.println("Failed");
+        }
+
+        System.out.println("Testing");
+
+        return regions;
     }
 
 }

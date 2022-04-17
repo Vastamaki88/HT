@@ -4,8 +4,8 @@ package com.example.harjoitustyo;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonStreamParser;
 
 import java.io.BufferedReader;
@@ -13,42 +13,29 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
+//This class gets all available commands for THL statistics
+//Main objects are Location, Datetime, Age, Sex, and Sensors
+//The process of fetching data is executed asynchronously
 
-public class ThlApi {
-    private static ThlApi instance;
-    private BufferedReader reader;
-    Boolean isRunning = false;
-    private MyTask Task;
-    private ThlObjects thlObjects = ThlObjects.getInstance();
+public class ThlApiCommands {
+    BufferedReader reader;
+    String URLString;
+    MyTask Task;
+    ThlObjects thlObjects = ThlObjects.getInstance();
 
-    private ThlApi(){
+    public ThlApiCommands(){
         reader = null;
-    }
-
-    public static ThlApi getInstance(){
-        if(instance == null){
-            instance = new ThlApi();
-        }return instance;
-    }
-    public boolean isRunnig(){
-        return isRunning;
-    }
-
-    //Starts the fetch process
-    public void fetchData(String DaySID, String ID){
-        isRunning = true;
-        String URLString = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json?row=" +
-                "hcdmunicipality2020-445222" +
-                "&column=" +
-                "dateweek20200101-" +DaySID+
-                "&filter=" +
-                "measure-444833";
-        //System.out.println("URL TO SEARCH: "+URLString);
+        URLString = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.dimensions.json";
         Task = new MyTask();
-        Task.execute(URLString,ID);
     }
-
+    //Starts the fetch process
+    public void fetchData(){
+        Task.execute(URLString);
+    }
     //Using asyncronous class
     private class MyTask
             extends AsyncTask<String, Void, String> {
@@ -57,20 +44,18 @@ public class ThlApi {
         @Override
         protected String doInBackground(String... params) {
             String urlStr = params[0];
-            String ID = params[1];
             BufferedReader reader = null;
             try {
                 URL url = new URL(urlStr);
+
                 reader = new BufferedReader(new InputStreamReader(url.openStream()));
                 StringBuffer buffer = new StringBuffer();
                 int read;
                 char[] chars = new char[1024];
-                buffer.append(ID +"#StoreTaskId#");
                 while ((read = reader.read(chars)) != -1) {
                     buffer.append(chars, 0, read);
                 }
-                String palautus = buffer.toString();
-                return palautus;
+                return buffer.toString();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -91,43 +76,37 @@ public class ThlApi {
         protected void onPostExecute(String result)
         {
             super.onPostExecute(result);
-            String[] resultArray = result.split("#StoreTaskId#");
-            ProcessData.getInstance().Handle(resultArray[0],resultArray[1]);
+            handleResult(result);
         }
     }
     //The JSON data is processed and set to ThlObjects
-  /*  private void handleResult(String ID, String result){
+    private void handleResult(String result){
         //Gson library is used to hadle the JSON data
         Gson gson = new Gson();
         JsonStreamParser p = new JsonStreamParser(result);
 
-     //   JsonObject jobj = (JsonObject) new Gson().fromJson(result, JsonObject.class)
-      //          .getAsJsonObject().get("dataset")
-      //          .getAsJsonObject().get("value");
-
-
-     //   String test2 = jobj.get("dataset").toString();
-
             try{
                 //Looping through Json Elements
-
                 while(p.hasNext()) {
                     JsonElement e = p.next();
-                    System.out.println("asd");
-                            if(e.isJsonObject()){
+                    //If element is Json array, go through each element
+                    if(e.isJsonArray()){
+                        JsonArray JsonJono = e.getAsJsonArray();
+                        for(JsonElement j : JsonJono){
+                            if(j.isJsonObject()){
                                 //New ThlObject is created here, and put into ThlObject array
-                                String objStr = e.toString();
-                                ThlResultObjects.dataset thlResultObject = gson.fromJson(objStr, ThlResultObjects.dataset.class);
-                                ThlResultObjects.getInstance().insertObject(thlResultObject);
-
+                                String objStr = j.toString();
+                                ThlObjects.ThlObject thlObject = gson.fromJson(objStr,ThlObjects.ThlObject.class);
+                                thlObjects.insertThlObject(thlObject);
+                                if(thlObjects.objectsCount()==5){
+                                    thlObjects.getRegions();
+                                }
                             }
                         }
+                    }
+                }
             }catch (Exception e){
 
             }
     }
-    public String getWeekSid(String weekNo){
-
-        return null;
-    }*/
 }

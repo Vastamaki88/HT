@@ -1,38 +1,295 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Custom_Light"
+    android:elevation="4dp"
     tools:context=".FragmentStatistics">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:gravity="top">
+        android:layout_marginEnd="16dp"
+        android:gravity="top"
+        android:orientation="vertical">
 
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="top">
+            android:layout_height="60dp"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:outlineProvider="bounds">
+
+            <TextView
+                android:id="@+id/header_statistics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/header_statistics"
+                android:textSize="24dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:outlineProvider="bounds">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="50dp"
+                android:text="@string/cases_7days"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/cases_7days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="Loading"
+                android:textSize="20dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+            android:elevation="4dp"
+            android:gravity="center"
+            android:outlineProvider="bounds">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="50dp"
+                android:text="@string/cases_14days"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/cases_14days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="Loading"
+                android:textSize="20dp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:outlineProvider="bounds"
+            android:outlineSpotShadowColor="@color/black">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="50dp"
+                android:text="@string/cases_30days"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/cases_30days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="Loading"
+                android:textSize="20dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:outlineProvider="bounds">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="50dp"
+                android:text="@string/cases_100days"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/cases_100days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="Loading"
+                android:textSize="20dp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:outlineProvider="bounds">
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
-                android:text="@string/total_cases"
+                android:layout_marginLeft="50dp"
+                android:text="@string/cases_total"
                 android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/cases_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="TextView" />
+                android:text="Loading"
+                android:textSize="20dp" />
+
         </TableRow>
 
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="25dp" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/statistics_region"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/statistics_region"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/statistics_region2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="lol"
+                android:textSize="20dp" />
+
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/statistics_city"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/statistics_city"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/statistics_city2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="lol"
+                android:textSize="20dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/statistics_sensor"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/statistics_sensor"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/statistics_sensor2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="lol"
+                android:textSize="20dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/statistics_age"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/statistics_age"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/statistics_age2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="lol"
+                android:textSize="20dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/statistics_sex"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/statistics_sex"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/statistics_sex2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="lol"
+                android:textSize="20dp" />
+        </TableRow>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="25dp"></Space>
+        
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Filters" />
+
     </LinearLayout>
+
+
 </RelativeLayout>
