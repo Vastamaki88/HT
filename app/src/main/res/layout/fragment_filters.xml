@@ -4,42 +4,92 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center|top"
+    android:orientation="vertical"
     tools:context=".FragmentFilters">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="E" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/filter"
+        android:textSize="24dp" />
 
     <Spinner
         android:id="@+id/spinner_region"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_weight="1" />
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:minWidth="100dp"
+        android:minHeight="5dp" />
 
     <Spinner
         android:id="@+id/spinner_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:minWidth="100dp"
+        android:minHeight="5dp" />
 
     <Spinner
         android:id="@+id/spinner_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:minWidth="100dp"
+        android:minHeight="5dp" />
 
     <Spinner
         android:id="@+id/spinner_sex"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:minWidth="100dp"
+        android:minHeight="5dp" />
 
     <Spinner
         android:id="@+id/spinner_sensor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:minWidth="100dp"
+        android:minHeight="5dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:text="OK" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
 
 </LinearLayout>

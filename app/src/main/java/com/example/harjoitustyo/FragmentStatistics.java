@@ -4,11 +4,15 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,6 +30,7 @@ public class FragmentStatistics extends Fragment {
     TextView textViewAge;
     TextView textViewSensor;
     StatisticsData SD;
+    Button filterButton;
 
 
     @Override
@@ -36,6 +41,7 @@ public class FragmentStatistics extends Fragment {
         textViewCases30d = this.getView().findViewById(R.id.cases_30days);
         textViewCases100d = this.getView().findViewById(R.id.cases_100days);
         textViewCasesTotal = this.getView().findViewById(R.id.cases_total);
+        filterButton = this.getView().findViewById(R.id.buttonFilter);
         //Data info
         textViewSex = this.getView().findViewById(R.id.statistics_sex2);
         textViewRegion = this.getView().findViewById(R.id.statistics_region2);
@@ -55,6 +61,33 @@ public class FragmentStatistics extends Fragment {
         casesInPrevDays(30,textViewCases30d);
         casesInPrevDays(100,textViewCases100d);
         casesTotal(textViewCasesTotal);
+
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getActivity()
+                        .getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new FragmentFilters());
+                fragmentTransaction.commit();
+                //FragmentChange FG = new FragmentChange();
+                //Fragment newFrag = new FragmentFilters();
+                //FG.replaceFragment(newFrag);
+            }
+        });
+
+    }
+    class HelperClass extends AppCompatActivity{
+        public void onBtnClick(View view){
+            Fragment newFrag = new FragmentFilters();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container,newFrag)
+                    .addToBackStack(newFrag.toString())
+                    .setTransition(FragmentTransaction
+                            .TRANSIT_FRAGMENT_OPEN)
+                    .commit();
+
+        }
     }
 
     @Override

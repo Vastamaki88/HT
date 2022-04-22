@@ -23,7 +23,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-    Context context;
 
 
     @Override
@@ -52,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(!ThlObjects.getInstance().isInitialized()){
             thlApiCmnds.fetchData();
         }
+
     }
 
 
@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.statistics:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new FragmentStatistics()).commit();
+                ArrayList<String>testilista = new ArrayList<>();
+                testilista = ThlObjects.getInstance().getCities();
                 break;
             case R.id.create_graph:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

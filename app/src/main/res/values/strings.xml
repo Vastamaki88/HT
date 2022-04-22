@@ -14,6 +14,7 @@
     <string name="cases_100days">100 days</string>
 
     <string name="header_statistics">Coronavirus Statistics</string>
+    <string name="filter">Filters</string>
 
     <string name="statistics_region">Region</string>
     <string name="statistics_city">City</string>

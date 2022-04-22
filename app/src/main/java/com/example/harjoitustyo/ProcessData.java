@@ -67,7 +67,6 @@ public class ProcessData {
         public void addResult(int i){
             result+= i;
         }
-
         public boolean isReady(){
             return ready;
         }
@@ -81,7 +80,6 @@ public class ProcessData {
             this.ready = true;
         }
     }
-
 
     public int sumValues(String data) {
         int palautus = 0;
@@ -98,23 +96,6 @@ public class ProcessData {
         }catch (Exception e){
             System.out.println("Arvoa ei löytynyt: vihe :"+e);
         }
-        /*
-        try {
-            valueJson = new Gson().fromJson(data, JsonObject.class)
-                    .getAsJsonObject().get("dataset")
-                    .getAsJsonObject().get("value")
-                    .getAsJsonObject();
-            if(valueJson.size()>1000){
-                for(int i = 0;i < 10000;i++){
-                    String testiarvo = valueJson.get(String.valueOf(i)).toString();
-                    System.out.println(testiarvo+" i arvo "+i );
-                }
-            }
-            value = valueJson.get(String.valueOf(valueJson.size()-1)).toString().replace("\"","");
-
-        }catch (Exception e){
-            System.out.println("Arvoa ei löytynyt: vihe :"+e);
-        }*/
 
         try {
             pvm = new Gson().fromJson(data, JsonObject.class)

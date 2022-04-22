@@ -1,7 +1,8 @@
 package com.example.harjoitustyo;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Set;
 
 
 public class ThlObjects {
@@ -62,18 +63,82 @@ public class ThlObjects {
             public String getID(){return id;}
         }
     }
-    public ArrayList<String>getRegions(){
-        ArrayList<String>regions = new ArrayList<>();
+    public ArrayList<String> getRegions(){
+        HashMap<String, String> regions = new HashMap();
         try{
-            ArrayList<ThlObject.Children> regionObjects = ThlObjects.getInstance().getThlObject(0).getChildren();
-            System.out.println("hold");
+            ArrayList<ThlObject.Children> regionObjects = ThlObjects.getInstance().getThlObject(0).getChildren().get(0).getChildren();
+            for(ThlObject.Children city : regionObjects){
+                regions.put(city.getLabel(),city.getSid());
+                System.out.println("test");
+            }
         }catch (Exception e){
             System.out.println("Failed");
         }
+        Set<String> keySet = regions.keySet();
+        ArrayList<String>regionsList = new ArrayList<>(keySet);
+        return regionsList;
+    }
+    public ArrayList<String> getCities(){
+        HashMap<String, String> cities = new HashMap();
+        try{
+            ArrayList<ThlObject.Children> cityObjects = ThlObjects.getInstance().getThlObject(0).getChildren().get(0).getChildren();
+            for(ThlObject.Children region : cityObjects){
+                for(ThlObject.Children city :region.getChildren()) {
+                    cities.put(city.getLabel(), city.getSid());
+                }
+            }
+        }catch (Exception e){
+            System.out.println("Failed");
+        }
+        Set<String> keySet = cities.keySet();
+        ArrayList<String>citiesList = new ArrayList<>(keySet);
 
-        System.out.println("Testing");
+        return citiesList;
+    }
+    public ArrayList<String> getSensors(){
+        HashMap<String, String> sensors = new HashMap();
+        try{
+            ArrayList<ThlObject.Children> sensorObjects = ThlObjects.getInstance().getThlObject(4).getChildren().get(0).getChildren();
+            for(ThlObject.Children city : sensorObjects){
+                sensors.put(city.getLabel(),city.getSid());
+            }
+        }catch (Exception e){
+            System.out.println("Failed");
+        }
+        Set<String> keySet = sensors.keySet();
+        ArrayList<String>sensorsList = new ArrayList<>(keySet);
 
-        return regions;
+        return sensorsList;
+    }
+    public ArrayList<String> getAge(){
+        HashMap<String, String> ages = new HashMap();
+        try{
+            ArrayList<ThlObject.Children> ageObjects = ThlObjects.getInstance().getThlObject(2).getChildren().get(0).getChildren();
+            for(ThlObject.Children age : ageObjects){
+                ages.put(age.getLabel(),age.getSid());
+            }
+        }catch (Exception e){
+            System.out.println("Failed");
+        }
+        Set<String> keySet = ages.keySet();
+        ArrayList<String>regionsList = new ArrayList<>(keySet);
+
+        return regionsList;
+    }
+    public ArrayList<String> getSexes(){
+        HashMap<String, String> sexes = new HashMap();
+        try{
+            ArrayList<ThlObject.Children> sexObjects = ThlObjects.getInstance().getThlObject(3).getChildren().get(0).getChildren();
+            for(ThlObject.Children city : sexObjects){
+                sexes.put(city.getLabel(),city.getSid());
+            }
+        }catch (Exception e){
+            System.out.println("Failed");
+        }
+        Set<String> keySet = sexes.keySet();
+        ArrayList<String>regionsList = new ArrayList<>(keySet);
+
+        return regionsList;
     }
 
 }
