@@ -1,5 +1,7 @@
 package com.example.harjoitustyo;
 
+import com.example.harjoitustyo.THL.ThlObjects;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,6 +11,7 @@ public class DayClass {
     private HashMap<String, List<Date>> weekDayPair;
     private ThlObjects.ThlObject.Children day;
     private String week;
+
 
     public DayClass(){
         weekDayPair = new HashMap<>();

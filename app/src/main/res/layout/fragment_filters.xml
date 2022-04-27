@@ -3,30 +3,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Custom_Light"
     android:gravity="center|top"
     android:orientation="vertical"
     tools:context=".FragmentFilters">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:text="@string/filter"
+        android:textColor="@color/black"
         android:textSize="24dp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginStart="32dp"
+        android:gravity="start"
+        android:text="@string/statistics_region"
+        android:textColor="@color/black"
+        android:textSize="20dp">
+
+    </TextView>
+
     <Spinner
+
         android:id="@+id/spinner_region"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:minWidth="100dp"
-        android:minHeight="5dp" />
+        android:minHeight="40dp"
+        android:popupBackground="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginStart="32dp"
+        android:gravity="start"
+        android:text="@string/statistics_city"
+        android:textColor="@color/black"
+        android:textSize="20dp">
+
+    </TextView>
 
     <Spinner
         android:id="@+id/spinner_city"
@@ -37,8 +64,21 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
+
         android:minWidth="100dp"
-        android:minHeight="5dp" />
+        android:minHeight="40dp"
+        android:popupBackground="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginStart="32dp"
+        android:gravity="start"
+        android:text="@string/statistics_age"
+        android:textColor="@color/black"
+        android:textSize="20dp">
+
+    </TextView>
 
     <Spinner
         android:id="@+id/spinner_age"
@@ -50,7 +90,19 @@
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:minWidth="100dp"
-        android:minHeight="5dp" />
+        android:minHeight="40dp"
+        android:popupBackground="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginStart="32dp"
+        android:gravity="start"
+        android:text="@string/statistics_sex"
+        android:textColor="@color/black"
+        android:textSize="20dp">
+
+    </TextView>
 
     <Spinner
         android:id="@+id/spinner_sex"
@@ -62,7 +114,19 @@
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:minWidth="100dp"
-        android:minHeight="5dp" />
+        android:minHeight="40dp"
+        android:popupBackground="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginStart="32dp"
+        android:gravity="start"
+        android:text="@string/statistics_sensor"
+        android:textColor="@color/black"
+        android:textSize="20dp">
+
+    </TextView>
 
     <Spinner
         android:id="@+id/spinner_sensor"
@@ -74,14 +138,15 @@
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:minWidth="100dp"
-        android:minHeight="5dp" />
+        android:minHeight="40dp"
+        android:popupBackground="@color/white" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="50dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -90,6 +155,6 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="50dp" />
 
 </LinearLayout>

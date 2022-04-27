@@ -1,5 +1,7 @@
 package com.example.harjoitustyo;
 
+import com.example.harjoitustyo.THL.ThlObjects;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,12 +14,14 @@ import java.util.Map;
 public class DateClass {
     private static DateClass instance = null;
     SimpleDateFormat simpleDateFormat;
+    SimpleDateFormat simpleDateFormat2;
     Date date;
     Calendar calendar;
 
 
     private DateClass(){
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        simpleDateFormat2 = new SimpleDateFormat("dd-MM-yyyy");
         date = new Date();
     }
 
@@ -99,7 +103,7 @@ public class DateClass {
                     if (w.getID().equals(weekID)) {
                         for (ThlObjects.ThlObject.Children d : w.getChildren()) {
                             try {
-                                Date dateTemp = simpleDateFormat.parse(d.label);
+                                Date dateTemp = simpleDateFormat.parse(d.getLabel());
                                 if (datesList.contains(dateTemp)) {
                                     palautus.add(d);
                                 }

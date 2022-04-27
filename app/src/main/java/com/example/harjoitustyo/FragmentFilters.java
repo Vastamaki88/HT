@@ -5,18 +5,20 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
+import com.example.harjoitustyo.THL.ThlFilterItems;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +31,6 @@ public class FragmentFilters extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
     @Override
@@ -41,11 +42,13 @@ public class FragmentFilters extends Fragment {
         Spinner ageSpin;
         Spinner sexSpin;
         Spinner sensorSpin;
+        Button okButton;
         regionSpin = this.getView().findViewById(R.id.spinner_region);
         citySpin = this.getView().findViewById(R.id.spinner_city);
         ageSpin = this.getView().findViewById(R.id.spinner_age);
         sexSpin = this.getView().findViewById(R.id.spinner_sex);
         sensorSpin = this.getView().findViewById(R.id.spinner_sensor);
+        okButton = this.getView().findViewById(R.id.button_filter);
 
 
         helperClass hc = new helperClass();
@@ -54,8 +57,30 @@ public class FragmentFilters extends Fragment {
         hc.setSpinner(ageSpin, this.getView(), filter.age.ordinal());
         hc.setSpinner(sexSpin, this.getView(), filter.sex.ordinal());
         hc.setSpinner(sensorSpin, this.getView(), filter.sensor.ordinal());
-    }
 
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StatisticsData SD = StatisticsData.getInstance();
+                SD.setAge(ageSpin.getSelectedItem().toString());
+                SD.setCity(citySpin.getSelectedItem().toString());
+                SD.setRegion(regionSpin.getSelectedItem().toString());
+                SD.setSensor(sensorSpin.getSelectedItem().toString());
+                SD.setSex(sexSpin.getSelectedItem().toString());
+
+                FragmentFilters.HelperClass2 HC2 =new FragmentFilters.HelperClass2();
+                HC2.changeFragment();
+            }
+        });
+    }
+    class HelperClass2 extends AppCompatActivity{
+        public void changeFragment(){
+            FragmentTransaction fragmentTransaction = getActivity()
+                    .getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, new FragmentStatistics());
+            fragmentTransaction.commit();
+        }
+    }
 
     // TODO: Rename and change types and number of parameters
     public static FragmentFilters newInstance(String param1, String param2) {
@@ -64,7 +89,6 @@ public class FragmentFilters extends Fragment {
 
         return fragment;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,26 +100,34 @@ class helperClass extends Activity{
     public void setSpinner(Spinner spinner, View view, int ID){
         FragmentFilters.filter filterID = FragmentFilters.filter.values()[ID];
         ArrayList<String> keys = new ArrayList<>();
+        int index = 0;
+        StatisticsData SD = StatisticsData.getInstance();
         switch (filterID){
             case age:
-                keys = ThlObjects.getInstance().getAge();
+                keys = ThlFilterItems.getInstance().getAgesList();
+                index = keys.indexOf(SD.getAge());
                 break;
             case sensor:
-                keys = ThlObjects.getInstance().getSensors();
+                keys = ThlFilterItems.getInstance().getSensorsList();
+                index = keys.indexOf(SD.getSensor());
                 break;
             case sex:
-                keys = ThlObjects.getInstance().getSexes();
+                keys = ThlFilterItems.getInstance().getSexesList();
+                index = keys.indexOf(SD.getSex());
                 break;
             case city:
-                keys = ThlObjects.getInstance().getCities();
+                keys = ThlFilterItems.getInstance().getCitiesList();
+                index = keys.indexOf(SD.getCity());
                 break;
             case region:
-                keys = ThlObjects.getInstance().getRegions();
+                keys = ThlFilterItems.getInstance().getRegionsList();
+                index = keys.indexOf(SD.getRegion());
                 break;
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item,keys);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        spinner.setSelection(index);
+        System.out.println(spinner.getSelectedItem());
     }
-
 }

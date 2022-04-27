@@ -1,34 +1,35 @@
-package com.example.harjoitustyo;
+package com.example.harjoitustyo.Graph;
 
 
 import android.os.AsyncTask;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonStreamParser;
+import com.example.harjoitustyo.ProcessData;
+import com.example.harjoitustyo.StatisticsData;
+import com.example.harjoitustyo.THL.ThlFilterItems;
+import com.example.harjoitustyo.THL.ThlObjects;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 
-public class ThlApi {
-    private static ThlApi instance;
+public class ThlApiGraph {
+    private static ThlApiGraph instance;
     private BufferedReader reader;
     Boolean isRunning = false;
     private MyTask Task;
     private ThlObjects thlObjects = ThlObjects.getInstance();
 
-    private ThlApi(){
+    private ThlApiGraph(){
         reader = null;
     }
 
-    public static ThlApi getInstance(){
+    public static ThlApiGraph getInstance(){
         if(instance == null){
-            instance = new ThlApi();
+            instance = new ThlApiGraph();
         }return instance;
     }
     public boolean isRunnig(){
@@ -36,15 +37,45 @@ public class ThlApi {
     }
 
     //Starts the fetch process
-    public void fetchData(String DaySID, String ID){
+    public void fetchData(String daySids, String ID){
+        ThlFilterItems THLItems = ThlFilterItems.getInstance();
+        String sensor = GraphData.getInstance().getSensor();
+        String age = GraphData.getInstance().getAge();
+        String region = GraphData.getInstance().getRegion();
+        String sex = GraphData.getInstance().getSex();
+        String city = GraphData.getInstance().getCity();
+
+        sensor = "measure-"+THLItems.getSensorID(sensor)+".";
+
+        if(!sex.equals("Kaikki")){
+            sex = "&filter=sex-" + THLItems.getSexID(sex);
+        }else{
+            sex = "";
+        }
+
+        if(!age.equals("Kaikki")){
+                age = "&filter=ttr10yage-"+THLItems.getAgeID(age);
+            }else{
+            age="";
+        }if(!region.equals("Kaikki")){
+            region = "&filter=hcdmunicipality2020-"+THLItems.getRegionID(region);
+        }else{region="";}
+        if(!city.equals("Kaikki")){
+            city = "&filter=hcdmunicipality2020-"+THLItems.getCityID(city);
+        }else{
+            city="";
+        }
         isRunning = true;
-        String URLString = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json?row=" +
-                "hcdmunicipality2020-445222" +
+        String URLString = "";
+        URLString = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json?row=" +
+                "dateweek20200101-"+ daySids +
                 "&column=" +
-                "dateweek20200101-" +DaySID+
-                "&filter=" +
-                "measure-444833";
-        //System.out.println("URL TO SEARCH: "+URLString);
+                sensor+
+                region +
+                city +
+                age+
+                sex;
+        System.out.println("URL TO SEARCH: "+URLString);
         Task = new MyTask();
         Task.execute(URLString,ID);
     }
@@ -92,42 +123,7 @@ public class ThlApi {
         {
             super.onPostExecute(result);
             String[] resultArray = result.split("#StoreTaskId#");
-            ProcessData.getInstance().Handle(resultArray[0],resultArray[1]);
+            GraphData.getInstance().HandleData(resultArray[1]);
         }
     }
-    //The JSON data is processed and set to ThlObjects
-  /*  private void handleResult(String ID, String result){
-        //Gson library is used to hadle the JSON data
-        Gson gson = new Gson();
-        JsonStreamParser p = new JsonStreamParser(result);
-
-     //   JsonObject jobj = (JsonObject) new Gson().fromJson(result, JsonObject.class)
-      //          .getAsJsonObject().get("dataset")
-      //          .getAsJsonObject().get("value");
-
-
-     //   String test2 = jobj.get("dataset").toString();
-
-            try{
-                //Looping through Json Elements
-
-                while(p.hasNext()) {
-                    JsonElement e = p.next();
-                    System.out.println("asd");
-                            if(e.isJsonObject()){
-                                //New ThlObject is created here, and put into ThlObject array
-                                String objStr = e.toString();
-                                ThlResultObjects.dataset thlResultObject = gson.fromJson(objStr, ThlResultObjects.dataset.class);
-                                ThlResultObjects.getInstance().insertObject(thlResultObject);
-
-                            }
-                        }
-            }catch (Exception e){
-
-            }
-    }
-    public String getWeekSid(String weekNo){
-
-        return null;
-    }*/
 }

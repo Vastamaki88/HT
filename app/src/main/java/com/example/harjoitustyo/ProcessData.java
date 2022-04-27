@@ -1,8 +1,10 @@
 package com.example.harjoitustyo;
 
 import android.widget.TextView;
+
+import com.example.harjoitustyo.THL.ThlApi;
+import com.example.harjoitustyo.THL.ThlObjects;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
@@ -10,7 +12,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class ProcessData {
     private static ProcessData instance = null;
@@ -28,6 +29,10 @@ public class ProcessData {
     }
     public void GetCumulativeCasesCount(ArrayList<ThlObjects.ThlObject.Children> list, String ID, TextView t) {
         r = new result(t);
+        if(StatisticsData.getInstance().getSensor().equals("Asukaslukumäärä")){
+            r.setResultToView("-");
+            return;
+        }
         if (resultHM.containsKey(ID)) {
             resultHM.get(ID).setResultToView();
             return;
@@ -79,6 +84,9 @@ public class ProcessData {
         public void setToReady(){
             this.ready = true;
         }
+        public void setResultToView(String res){
+            this.t.setText(res);
+        }
     }
 
     public int sumValues(String data) {
@@ -87,7 +95,6 @@ public class ProcessData {
         String value = null;
         String pvm = null;
         try{
-
             JSONObject JObject = new JSONObject(data).getJSONObject("dataset").getJSONObject("value");
             JSONArray JArr = JObject.names();
             String value2 = JArr.getString(JArr.length()-1);
@@ -96,7 +103,6 @@ public class ProcessData {
         }catch (Exception e){
             System.out.println("Arvoa ei löytynyt: vihe :"+e);
         }
-
         try {
             pvm = new Gson().fromJson(data, JsonObject.class)
                     .getAsJsonObject().get("dataset")

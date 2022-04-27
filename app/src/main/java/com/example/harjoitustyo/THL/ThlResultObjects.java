@@ -1,4 +1,4 @@
-package com.example.harjoitustyo;
+package com.example.harjoitustyo.THL;
 
 import com.google.gson.annotations.SerializedName;
 

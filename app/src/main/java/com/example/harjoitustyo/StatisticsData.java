@@ -9,11 +9,11 @@ public class StatisticsData {
     private String sex;
 
     private  StatisticsData(){
-        region = "all";
-        city = "all";
-        age = "all";
-        sensor ="all";
-        sex = "all";
+        region = "Kaikki";
+        city = "Kaikki";
+        age = "Kaikki";
+        sensor ="Tapausten lukumäärä";
+        sex = "Kaikki";
     }
 
     public static StatisticsData getInstance(){

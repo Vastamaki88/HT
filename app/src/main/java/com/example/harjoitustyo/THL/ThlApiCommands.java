@@ -1,4 +1,4 @@
-package com.example.harjoitustyo;
+package com.example.harjoitustyo.THL;
 
 
 import android.os.AsyncTask;
@@ -13,9 +13,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 //This class gets all available commands for THL statistics
 //Main objects are Location, Datetime, Age, Sex, and Sensors
@@ -99,7 +96,7 @@ public class ThlApiCommands {
                                 ThlObjects.ThlObject thlObject = gson.fromJson(objStr,ThlObjects.ThlObject.class);
                                 thlObjects.insertThlObject(thlObject);
                                 if(thlObjects.objectsCount()==5){
-                                    thlObjects.getRegions();
+                                    System.out.println("INITIALIZED");
                                 }
                             }
                         }

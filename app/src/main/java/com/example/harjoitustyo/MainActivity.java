@@ -8,20 +8,37 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.example.harjoitustyo.Graph.FragmentGraph;
+import com.example.harjoitustyo.Graph.FragmentGraphMain;
+import com.example.harjoitustyo.THL.ThlApiCommands;
+import com.example.harjoitustyo.THL.ThlObjects;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Array;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Element;
+
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    Context context;
     private DrawerLayout drawer;
 
 
@@ -30,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ContextClass.getInstance().setContext(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -51,12 +69,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(!ThlObjects.getInstance().isInitialized()){
             thlApiCmnds.fetchData();
         }
-
     }
+
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if(SettingsClass.getInstance().changed){
+            changeLanguageClicked();
+        }
         switch (item.getItemId()){
             case R.id.settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -65,12 +86,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.statistics:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new FragmentStatistics()).commit();
-                ArrayList<String>testilista = new ArrayList<>();
-                testilista = ThlObjects.getInstance().getCities();
                 break;
             case R.id.create_graph:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new FragmentSettings()).commit();
+                        new FragmentGraphMain()).commit();
                 break;
             case R.id.main:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -80,5 +99,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
+    public void sleep(int MS){
+        try {
+            Thread.sleep(MS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public void changeLanguageClicked() {
+        SettingsClass.getInstance().changed = false;
+        Locale myLocale = new Locale(SettingsClass.getInstance().getLanguage());
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, MainActivity.class);
+        startActivity(refresh);
+        finish();
+    }
 }

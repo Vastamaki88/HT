@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:text="@string/graph_main_header"
+        android:gravity="center"
+        android:textColor="@color/black">
+
+    </TextView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp">
+    </Space>
+
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="match_parent"
+        app:columnCount="3"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/textview_style3"
+            app:layout_gravity="center"
+            android:text="@string/graph_set_date_start">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/graph_date_start_text"
+            style="@style/textview_style4"
+            android:text="01-01-2020"
+            app:layout_gravity="center">
+
+        </TextView>
+
+        <Button
+            android:id="@+id/graph_set_start"
+            android:layout_margin="5dp"
+            android:width="5dp"
+            android:maxWidth="5dp"
+            android:text="@string/graph_set_date"
+            app:layout_columnWeight="1"></Button>
+        <TextView
+            android:text="@string/graph_set_date_end"
+            app:layout_gravity="center"
+            style="@style/textview_style3">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/graph_date_end_text"
+            style="@style/textview_style4"
+            android:text="01-01-2020"
+            app:layout_gravity="center">
+
+        </TextView>
+
+        <Button
+            android:id="@+id/graph_set_end"
+            android:layout_margin="5dp"
+            android:text="@string/graph_set_date"
+            app:layout_columnWeight="1"></Button>
+
+
+
+    </androidx.gridlayout.widget.GridLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView19"
+            style="@style/textview_style3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/statistics_region"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="24dp"></TextView>
+
+        <Spinner
+            android:id="@+id/graph_spinner_region"
+            style="@style/spinner_style2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+        <TextView
+            android:id="@+id/textView15"
+            style="@style/textview_style3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/statistics_city"
+            app:layout_constraintTop_toBottomOf="@+id/graph_spinner_region"
+            tools:layout_editor_absoluteX="24dp"></TextView>
+
+        <Spinner
+            android:id="@+id/graph_spinner_city"
+            style="@style/spinner_style2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+        <TextView
+            android:id="@+id/textView18"
+            style="@style/textview_style3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/statistics_sex"
+            app:layout_constraintTop_toBottomOf="@+id/graph_spinner_city"
+            tools:layout_editor_absoluteX="24dp"></TextView>
+
+        <Spinner
+            android:id="@+id/graph_spinner_sex"
+            style="@style/spinner_style2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView18"/>
+
+        <TextView
+            android:id="@+id/textView17"
+            style="@style/textview_style3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/statistics_age"
+            app:layout_constraintTop_toBottomOf="@+id/graph_spinner_sex"
+            tools:layout_editor_absoluteX="24dp"></TextView>
+
+        <Spinner
+            android:id="@+id/graph_spinner_age"
+            style="@style/spinner_style2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+        <TextView
+            android:id="@+id/textView16"
+            style="@style/textview_style3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/statistics_sensor"
+            app:layout_constraintTop_toBottomOf="@+id/graph_spinner_age"
+            tools:layout_editor_absoluteX="24dp"></TextView>
+
+        <Spinner
+            android:id="@+id/graph_spinner_sensor"
+            style="@style/spinner_style2"
+            app:layout_constraintTop_toBottomOf="@+id/textView16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:text="Save Graph Data"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/graph_spinner_sensor" />
+
+        <Button
+            android:id="@+id/button_view_graph"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="24dp"
+            android:text="Create Graph"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/graph_spinner_sensor" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -4,9 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
@@ -14,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.harjoitustyo.THL.ThlObjects;
 
 import java.util.ArrayList;
 
@@ -69,26 +69,11 @@ public class FragmentStatistics extends Fragment {
                         .getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, new FragmentFilters());
                 fragmentTransaction.commit();
-                //FragmentChange FG = new FragmentChange();
-                //Fragment newFrag = new FragmentFilters();
-                //FG.replaceFragment(newFrag);
             }
         });
 
     }
-    class HelperClass extends AppCompatActivity{
-        public void onBtnClick(View view){
-            Fragment newFrag = new FragmentFilters();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container,newFrag)
-                    .addToBackStack(newFrag.toString())
-                    .setTransition(FragmentTransaction
-                            .TRANSIT_FRAGMENT_OPEN)
-                    .commit();
 
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,6 +86,6 @@ public class FragmentStatistics extends Fragment {
         ProcessData.getInstance().GetCumulativeCasesCount(ThlDayObjectList, String.valueOf(IDClass.getInstance().getNewID()),textView);
     }
     public void casesTotal(TextView t){
-        ProcessData.getInstance().getCasesTotal(t, "totalCases");
+        ProcessData.getInstance().getCasesTotal(t, String.valueOf(IDClass.getInstance().getNewID()));
     }
     }
