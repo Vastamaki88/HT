@@ -61,6 +61,7 @@ public class GraphData extends Fragment {
         JSONObject jsonValues = null;
         JSONObject jsonDates = null;
         JSONObject JObject = null;
+        daysList.clear();
 
         try {
             JObject = new JSONObject(result).getJSONObject("dataset");

@@ -16,12 +16,17 @@
     <string name="header_statistics">Coronavirus Statistics</string>
     <string name="filter">Filters</string>
 
+
     <string name="statistics_region">Region</string>
     <string name="statistics_city">City</string>
     <string name="statistics_sensor">Sensor</string>
     <string name="statistics_age">Age</string>
     <string name="statistics_sex">Sex</string>
 
+    <string name="graph_filename">File name</string>
+    <string name="graph_save_header">Save graph</string>
+    <string name="graph_save">Save</string>
+    <string name="graph_back">Back</string>
     <string name="graph_main_header">Create Graph</string>
     <string name="graph_set_date">Set</string>
     <string name="graph_set_date_start">Start</string>

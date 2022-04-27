@@ -6,12 +6,37 @@
     tools:context=".Graph.FragmentGraph">
 
     <!-- TODO: Update blank fragment layout-->
+
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true">
+        android:layout_height="550dp"
+        android:layout_above="@+id/graph_back"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp">
 
     </com.github.mikephil.charting.charts.LineChart>
+
+    <Button
+        android:id="@+id/graph_save"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/graph_save" />
+
+    <Button
+        android:id="@+id/graph_back"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/graph_back" />
 
 </RelativeLayout>

@@ -7,11 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.harjoitustyo.R;
 import com.github.mikephil.charting.charts.LineChart;
@@ -27,29 +30,54 @@ import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class FragmentGraph extends Fragment {
     GraphData GD;
+    Button backButton;
+    Button saveButton;
+    FragmentHelperClass FHG;
     public FragmentGraph() { }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        backButton = this.getView().findViewById(R.id.graph_back);
+        saveButton = this.getView().findViewById(R.id.graph_save);
         GD = GraphData.getInstance();
         HelperClass HC = new HelperClass(this.getView());
         LineChart lineChart = HC.getLineChart();
         System.out.println("On View Created!!!");
+        SavedGraphs savedGraphs = SavedGraphs.getInstance();
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FHG = new FragmentHelperClass();
+                FragmentTransaction fragmentTransaction = getActivity()
+                        .getSupportFragmentManager().beginTransaction();
+                FHG.ChangeFragmentBack(fragmentTransaction);
+            }
+        });
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FHG = new FragmentHelperClass();
+                FragmentTransaction fragmentTransaction = getActivity()
+                        .getSupportFragmentManager().beginTransaction();
+                FHG.ChangeFragmentSave(fragmentTransaction);
+            }
+        });
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_graph, container, false);
+
     }
     class HelperClass extends AppCompatActivity implements OnChartGestureListener, OnChartValueSelectedListener{
         private static final String TAG = "fragment_graph";
@@ -61,7 +89,6 @@ public class FragmentGraph extends Fragment {
             mChart.setDragEnabled(true);
             mChart.setScaleEnabled(false);
             mChart.setDrawGridBackground(true);
-
             ArrayList<Entry> yValues = new ArrayList<>();
             ArrayList<String[]> values = GraphData.getInstance().getDaysList();
             int index = 0;
@@ -97,8 +124,8 @@ public class FragmentGraph extends Fragment {
             XAxis xAxis = mChart.getXAxis();
             xAxis.setValueFormatter(new MyAxisValueFormatter(values2));
             xAxis.setGranularity(1);
-            xAxis.setLabelRotationAngle(10f);
-            xAxis.setTextSize(15);
+            xAxis.setLabelRotationAngle(15f);
+            xAxis.setTextSize(10);
             xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
 
         }
@@ -174,5 +201,16 @@ public class FragmentGraph extends Fragment {
                 System.out.println("Exception: "+e);
             }return "virhe";
         }
+    }
+}
+class FragmentHelperClass extends Fragment{
+
+    public void ChangeFragmentBack(FragmentTransaction fragmentTransaction) {
+        fragmentTransaction.replace(R.id.fragment_container, new FragmentGraphMain());
+        fragmentTransaction.commit();
+    }
+    public void ChangeFragmentSave(FragmentTransaction fragmentTransaction) {
+        fragmentTransaction.replace(R.id.fragment_container, new FragmentGraphSave());
+        fragmentTransaction.commit();
     }
 }
