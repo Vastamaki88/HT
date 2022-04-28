@@ -83,8 +83,8 @@ public class FragmentGraphSave extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.save_graph_view, container, false);
     }
+    //Helper class to change fragment
     class FragmentHelperClass extends Fragment{
-
         public void ChangeFragment(FragmentTransaction fragmentTransaction) {
             fragmentTransaction.replace(R.id.fragment_container, new FragmentGraph());
             fragmentTransaction.commit();
