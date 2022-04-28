@@ -164,11 +164,11 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/createGraph_open"
             android:layout_width="150dp"
             android:layout_height="60dp"
             android:layout_marginStart="24dp"
-            android:text="Save Graph Data"
+            android:text="@string/saved_graph_open"
             android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

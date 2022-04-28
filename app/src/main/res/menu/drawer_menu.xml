@@ -24,6 +24,11 @@
             android:icon="@drawable/ic_settings"
             android:title="@string/settings"></item>
 
+        <item
+            android:id="@+id/saedGraphs"
+            android:icon="@drawable/ic_folder"
+            android:title="@string/saved_graph"></item>
+
     </group>
 
 </menu>

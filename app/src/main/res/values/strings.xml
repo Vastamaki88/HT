@@ -23,6 +23,8 @@
     <string name="statistics_age">Age</string>
     <string name="statistics_sex">Sex</string>
 
+    <string name="saved_graph_open">Open</string>
+    <string name="saved_graph">Saved Graphs</string>
     <string name="graph_filename">File name</string>
     <string name="graph_save_header">Save graph</string>
     <string name="graph_save">Save</string>
@@ -35,6 +37,9 @@
 
     <string name="languages_fin">Finnish</string>
     <string name="languages_en">English</string>
+
+    <string name="description">With Korona-App you can check corona statistics, and draw gaphs.
+        Data can be limited with tools provided by THL </string>
 
 
 </resources>

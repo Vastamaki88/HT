@@ -90,7 +90,7 @@ public class FragmentGraph extends Fragment {
             mChart.setScaleEnabled(false);
             mChart.setDrawGridBackground(true);
             ArrayList<Entry> yValues = new ArrayList<>();
-            ArrayList<String[]> values = GraphData.getInstance().getDaysList();
+            ArrayList<String[]> values = GD.getDaysList();
             int index = 0;
             for(String[] days : values){
                 yValues.add(new Entry(index,Float.valueOf(days[0])));
@@ -202,15 +202,16 @@ public class FragmentGraph extends Fragment {
             }return "virhe";
         }
     }
-}
-class FragmentHelperClass extends Fragment{
+    class FragmentHelperClass extends Fragment{
 
-    public void ChangeFragmentBack(FragmentTransaction fragmentTransaction) {
-        fragmentTransaction.replace(R.id.fragment_container, new FragmentGraphMain());
-        fragmentTransaction.commit();
-    }
-    public void ChangeFragmentSave(FragmentTransaction fragmentTransaction) {
-        fragmentTransaction.replace(R.id.fragment_container, new FragmentGraphSave());
-        fragmentTransaction.commit();
+        public void ChangeFragmentBack(FragmentTransaction fragmentTransaction) {
+            fragmentTransaction.replace(R.id.fragment_container, new FragmentGraphMain());
+            fragmentTransaction.commit();
+        }
+        public void ChangeFragmentSave(FragmentTransaction fragmentTransaction) {
+            fragmentTransaction.replace(R.id.fragment_container, new FragmentGraphSave());
+            fragmentTransaction.commit();
+        }
     }
 }
+

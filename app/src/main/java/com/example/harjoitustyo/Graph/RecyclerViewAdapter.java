@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.harjoitustyo.R;
@@ -15,11 +17,13 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<String[]>dataSet;
+    private ArrayList<Graph>dataSet;
+    private SelectListener listener;
 
-    public RecyclerViewAdapter(Context context, ArrayList<String[]>dataSet){
+    public RecyclerViewAdapter(Context context, ArrayList<Graph>dataSet, SelectListener listener){
         this.context = context;
         this.dataSet = dataSet;
+        this.listener = listener;
     }
     @NonNull
     @Override
@@ -32,8 +36,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
 
-        holder.textView1.setText(dataSet.get(position)[0]);
-        holder.textView2.setText(dataSet.get(position)[1]);
+        holder.textView1.setText(dataSet.get(position).getFilename());
+        holder.textView2.setText(dataSet.get(position).getDate());
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClicked(dataSet.get(holder.getAdapterPosition()));
+            }
+        });
+
     }
 
     @Override
@@ -42,16 +54,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView textView1, textView2;
+        CardView cardView;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView1 = itemView.findViewById(R.id.textview1);
-            textView2 = itemView.findViewById(R.id.textview2);
+            textView1 = itemView.findViewById(R.id.textview_recycler_1);
+            textView2 = itemView.findViewById(R.id.textview_recycler_2);
+            cardView = itemView.findViewById(R.id.cardView);
         }
     }
 
     // convenience method for getting data at click position
-    public String[] getItem(int id) {
+    public Graph getItem(int id) {
         return dataSet.get(id);
     }
 

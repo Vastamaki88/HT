@@ -36,16 +36,22 @@ public class SavedGraphs {
         }
         return instance;
     }
+    public void getGraphListStr(){
+        ArrayList<String>listC = new ArrayList<>();
+        for(Graph g : dataSetList){
+            listC.add(g.getFilename());
+        }
+    }
 
     public void addItem(Graph graph) {
         dataSetList.add(graph);
-
     }
     public void readFile(){
         String output="";
         File path = ContextClass.getInstance().getContext().getFilesDir();
+        String pathStr = path.toString()+"/SavedGraphs";
         try{
-            InputStream inputStream = ContextClass.getInstance().getContext().openFileInput(path.toString());
+            InputStream inputStream = ContextClass.getInstance().getContext().openFileInput("SavedGraphs");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String s = "";
             while((s= bufferedReader.readLine())!=null){
@@ -58,7 +64,8 @@ public class SavedGraphs {
             while(jsonStreamParser.hasNext()){
                 JsonElement element = jsonStreamParser.next();
                 jsonObject = element.getAsJsonObject();
-                Graph graph = gson.fromJson(output,Graph.class);
+                String jsonStr = jsonObject.toString();
+                Graph graph = gson.fromJson(jsonStr,Graph.class);
                 dataSetList.add(graph);
             }
 
@@ -69,7 +76,8 @@ public class SavedGraphs {
         }
     }
     public void writeFile(Graph graph){
-        File path = ContextClass.getInstance().getContext().getFilesDir();
+        File path = null;
+        path = ContextClass.getInstance().getContext().getFilesDir();
         String output="";
         Gson gson = new Gson();
         String json = gson.toJson(graph);
@@ -94,5 +102,8 @@ class Graph{
     public String getFilename(){
         return filename;
     }
-
+    public String getDate(){return dateStr;}
+    public ArrayList<String[]>getDataSet(){
+     return this.dataSet;
+    }
 }

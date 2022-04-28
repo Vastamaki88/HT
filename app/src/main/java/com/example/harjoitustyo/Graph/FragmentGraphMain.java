@@ -34,6 +34,7 @@ public class FragmentGraphMain extends Fragment {
     Button setStartDate;
     Button setEndDate;
     Button viewGraph;
+    Button openGraphs;
     Spinner regionSpin;
     Spinner citySpin;
     Spinner ageSpin;
@@ -59,7 +60,8 @@ public class FragmentGraphMain extends Fragment {
         setStartDate = this.getView().findViewById(R.id.graph_set_start);
         setEndDate = this.getView().findViewById(R.id.graph_set_end);
         viewGraph = this.getView().findViewById(R.id.button_view_graph);
-        HelperClass HC = new HelperClass(this.getView());
+        openGraphs = this.getView().findViewById(R.id.createGraph_open);
+        HelperClass HC = new FragmentGraphMain.HelperClass(this.getView());
 
 
         regionSpin = this.getView().findViewById(R.id.graph_spinner_region);
@@ -80,6 +82,13 @@ public class FragmentGraphMain extends Fragment {
         hc.setSpinner(sexSpin, this.getView(), FragmentFilters.filter.sex.ordinal());
         hc.setSpinner(sensorSpin, this.getView(), FragmentFilters.filter.sensor.ordinal());
 
+        openGraphs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HC.changeFragmentOpen(getActivity().getSupportFragmentManager().beginTransaction());
+            }
+        });
+
         regionSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -98,6 +107,7 @@ public class FragmentGraphMain extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
+
 
         viewGraph.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,11 +150,10 @@ public class FragmentGraphMain extends Fragment {
         public void changeFragment(){
             GraphData.getInstance().processData(getActivity()
                     .getSupportFragmentManager().beginTransaction());
-            /*
-            FragmentTransaction fragmentTransaction = getActivity()
-                    .getSupportFragmentManager().beginTransaction()
+        }
+        public void changeFragmentOpen(FragmentTransaction fragmentTransaction) {
             fragmentTransaction.replace(R.id.fragment_container, new FragmentGraph());
-            fragmentTransaction.commit();*/
+            fragmentTransaction.commit();
         }
 
         public void showDatePickerDialog(int id){
@@ -176,7 +185,6 @@ public class FragmentGraphMain extends Fragment {
                 t.setText(date);
                 GraphData.getInstance().setDateEnd(date);
             }
-
         }
     }
 

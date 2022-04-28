@@ -41,6 +41,9 @@ public class GraphData extends Fragment {
         setDateStart(dateStartStr);
         setDateEnd(dateEndStr);
     }
+    public void setDaysList(ArrayList<String[]> daysList){
+        this.daysList = daysList;
+    }
 
     public void processData(FragmentTransaction fragmentTransaction){
         this.fragmentTransaction = fragmentTransaction;

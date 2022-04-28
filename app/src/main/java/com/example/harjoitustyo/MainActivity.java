@@ -19,6 +19,9 @@ import android.view.View;
 
 import com.example.harjoitustyo.Graph.FragmentGraph;
 import com.example.harjoitustyo.Graph.FragmentGraphMain;
+import com.example.harjoitustyo.Graph.FragmentGraphRecycler;
+import com.example.harjoitustyo.Graph.FragmentGraphSave;
+import com.example.harjoitustyo.Graph.SavedGraphs;
 import com.example.harjoitustyo.THL.ThlApiCommands;
 import com.example.harjoitustyo.THL.ThlObjects;
 import com.google.android.material.navigation.NavigationView;
@@ -38,16 +41,16 @@ import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    Context context;
     private DrawerLayout drawer;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ContextClass.getInstance().setContext(this);
+        SavedGraphs savedGraphs = SavedGraphs.getInstance();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -94,6 +97,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.main:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new FragmentMain()).commit();
+                break;
+            case R.id.saedGraphs:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new FragmentGraphRecycler()).commit();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
