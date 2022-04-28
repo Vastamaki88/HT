@@ -19,11 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentGraphSave#newInstance} factory method to
- * create an instance of this fragment.
- */
+//This fragment is shown when user wants to save graph data
 public class FragmentGraphSave extends Fragment {
     TextView FilenameText;
     Button backButton;
@@ -36,6 +32,7 @@ public class FragmentGraphSave extends Fragment {
         backButton = this.getView().findViewById(R.id.savegraphBtn_back);
         saveButton = this.getView().findViewById(R.id.savegraphBtn_save);
 
+        //Back button listener, which changes the fragment
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,29 +43,31 @@ public class FragmentGraphSave extends Fragment {
 
             }
         });
-
+        //Save button listener, which saves graph data for the recycler view
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ArrayList<String[]> values = GraphData.getInstance().getDaysList();
+                //Current date is set to data. It will be in description field of recycler view cards
+                //Time is left out from the date
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = new Date();
                 String dateStr = formatter.format(date);
+                //New graph object is created
                 Graph graph = new Graph(values,dateStr,FilenameText.getText().toString());
+                //Graph data is written in JSON format to the device
                 SavedGraphs.getInstance().writeFile(graph);
+                //Graph data is set to list, which contains recycler view items
                 SavedGraphs.getInstance().addItem(graph);
             }
         });
     }
-
     public FragmentGraphSave() {
         // Required empty public constructor
     }
 
-
     public static FragmentGraphSave newInstance(String param1, String param2) {
         FragmentGraphSave fragment = new FragmentGraphSave();
-
         return fragment;
     }
 

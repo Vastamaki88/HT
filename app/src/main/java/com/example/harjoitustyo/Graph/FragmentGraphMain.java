@@ -29,7 +29,8 @@ import com.example.harjoitustyo.THL.ThlFilterItems;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-
+//The main graph fragment
+//This class includes functionality to choose the data for the graph
 public class FragmentGraphMain extends Fragment {
     Button setStartDate;
     Button setEndDate;
@@ -55,6 +56,7 @@ public class FragmentGraphMain extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //Components are initialized
         super.onViewCreated(view, savedInstanceState);
         GraphData GD = GraphData.getInstance();
         setStartDate = this.getView().findViewById(R.id.graph_set_start);
@@ -71,10 +73,11 @@ public class FragmentGraphMain extends Fragment {
         sensorSpin = this.getView().findViewById(R.id.graph_spinner_sensor);
         textDateStart = this.getView().findViewById(R.id.graph_date_start_text);
         textDateEnd = this.getView().findViewById(R.id.graph_date_end_text);
-
+        //Values to text views are received from GraphData class
         textDateEnd.setText(GD.getDateEnd());
         textDateStart.setText(GD.getDateStart());
 
+        //Helper class is used to set values to the spinners
         FragmentGraphMain.helperClass1 hc = new helperClass1();
         hc.setSpinner(regionSpin, this.getView(), FragmentFilters.filter.region.ordinal());
         hc.setSpinner(citySpin, this.getView(), FragmentFilters.filter.city.ordinal());
@@ -82,25 +85,28 @@ public class FragmentGraphMain extends Fragment {
         hc.setSpinner(sexSpin, this.getView(), FragmentFilters.filter.sex.ordinal());
         hc.setSpinner(sensorSpin, this.getView(), FragmentFilters.filter.sensor.ordinal());
 
+        //Listener for the open button
         openGraphs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HC.changeFragmentOpen(getActivity().getSupportFragmentManager().beginTransaction());
             }
         });
-
+        //Listener for the Region choosing spinner
         regionSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
+            //City cant be chosen at the same time, so it is set to default value
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 citySpin.setSelection(0);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
-
+        //Listener for the city choosing spinned
         citySpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
+            //Region cant be chosen at the same time, so it is set to default value
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 regionSpin.setSelection(0);
             }
@@ -108,7 +114,8 @@ public class FragmentGraphMain extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
 
-
+        //Listener for view graph button. All information from the spinners
+        //is read at this point
         viewGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,7 +129,7 @@ public class FragmentGraphMain extends Fragment {
                 HC.changeFragment();
             }
         });
-
+        //Listener for calendar button
         View.OnClickListener dateBtnListener1 = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,6 +138,7 @@ public class FragmentGraphMain extends Fragment {
 
             }
         };
+        //Listener for calendar button
         View.OnClickListener dateBtnListener2 = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,21 +149,25 @@ public class FragmentGraphMain extends Fragment {
         setStartDate.setOnClickListener(dateBtnListener1);
         setEndDate.setOnClickListener(dateBtnListener2);
     }
+    //Helper class to extend AppCompatActivity, also used for picking date
     class HelperClass extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
         View v;
         int BtnID = 0;
+        //View is received as a constructor parameter
         public HelperClass(View v){
             this.v = v;
         }
+        //This method is called to change the fragment
         public void changeFragment(){
             GraphData.getInstance().processData(getActivity()
                     .getSupportFragmentManager().beginTransaction());
         }
+        //Another method for changing the fragment
         public void changeFragmentOpen(FragmentTransaction fragmentTransaction) {
             fragmentTransaction.replace(R.id.fragment_container, new FragmentGraph());
             fragmentTransaction.commit();
         }
-
+        //Calendar component for picking date
         public void showDatePickerDialog(int id){
             BtnID = id;
             DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -167,6 +179,7 @@ public class FragmentGraphMain extends Fragment {
             datePickerDialog.show();
         }
         @Override
+        //This method is used to fromat the date String
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
             String monthStr = String.valueOf(month+1);
             String dayStr = String.valueOf(dayOfMonth);
@@ -191,7 +204,6 @@ public class FragmentGraphMain extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -200,6 +212,7 @@ public class FragmentGraphMain extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_graph_main, container, false);
     }
+    //Helper class to initialize spinners
     class helperClass1 extends Activity {
         public void setSpinner(Spinner spinner, View view, int ID){
             FragmentFilters.filter filterID = FragmentFilters.filter.values()[ID];

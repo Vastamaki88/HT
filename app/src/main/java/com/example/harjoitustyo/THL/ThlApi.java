@@ -40,13 +40,14 @@ public class ThlApi {
         String age = StatisticsData.getInstance().getAge();
         String region = StatisticsData.getInstance().getRegion();
         String sex = StatisticsData.getInstance().getSex();
+        String city = StatisticsData.getInstance().getCity();
 
         if(!sex.equals("Kaikki")){
             sex = "&filter=sex-" + THLItems.getSexID(sex);
         }else{
             sex = "";
         }
-        sensor = "&filter=measure-"+THLItems.getSensorID(sensor);
+        sensor = "measure-"+THLItems.getSensorID(sensor);
 
         if(!age.equals("Kaikki")){
                 age = "&filter=ttr10yage-"+THLItems.getAgeID(age);
@@ -55,13 +56,19 @@ public class ThlApi {
         }if(!region.equals("Kaikki")){
             region = "&filter=hcdmunicipality2020-"+THLItems.getRegionID(region);
         }else{region="";}
+        if(!city.equals("Kaikki")){
+            city = "&filter=hcdmunicipality2020-"+THLItems.getCityID(city);
+        }else{
+            city="";
+        }
         isRunning = true;
         String URLString = "";
         URLString = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json?row=" +
                 "dateweek20200101-"+ DaySID +
                 "&column=" +
-                region +
                 sensor+
+                region +
+                city+
                 age+
                 sex;
         System.out.println("URL TO SEARCH: "+URLString);

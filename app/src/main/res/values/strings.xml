@@ -16,7 +16,7 @@
     <string name="header_statistics">Coronavirus Statistics</string>
     <string name="filter">Filters</string>
 
-
+    <string name="statistics_edit_filters">Edit Filters</string>
     <string name="statistics_region">Region</string>
     <string name="statistics_city">City</string>
     <string name="statistics_sensor">Sensor</string>

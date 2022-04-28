@@ -179,7 +179,7 @@
             android:layout_width="150dp"
             android:layout_height="60dp"
             android:layout_marginEnd="24dp"
-            android:text="Create Graph"
+            android:text="@string/create_graph"
             android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

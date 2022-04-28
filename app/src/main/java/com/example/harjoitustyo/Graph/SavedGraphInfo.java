@@ -20,16 +20,14 @@ public class SavedGraphInfo extends Fragment {
     Button backButton;
     Button openButton;
     FragmentHelperClass FHG;
-    TextView textView;
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         backButton = this.getView().findViewById(R.id.SavedGraphInfo_back);
         openButton = this.getView().findViewById(R.id.SavedGraphInfo_open);
-        textView = this.getView().findViewById(R.id.textView_savedinfo);
         GraphData GD = GraphData.getInstance();
-
 
         openButton.setOnClickListener(new View.OnClickListener() {
             @Override

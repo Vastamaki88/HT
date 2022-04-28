@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+//This class draws the line graph based on user input
 public class FragmentGraph extends Fragment {
     GraphData GD;
     Button backButton;
@@ -47,11 +48,10 @@ public class FragmentGraph extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         backButton = this.getView().findViewById(R.id.graph_back);
         saveButton = this.getView().findViewById(R.id.graph_save);
+        //Data for the graph is stored in the GraphData class
         GD = GraphData.getInstance();
-        HelperClass HC = new HelperClass(this.getView());
-        LineChart lineChart = HC.getLineChart();
-        System.out.println("On View Created!!!");
-        SavedGraphs savedGraphs = SavedGraphs.getInstance();
+
+        //Listener for back button. Helper class is used to change the fragment
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +61,7 @@ public class FragmentGraph extends Fragment {
                 FHG.ChangeFragmentBack(fragmentTransaction);
             }
         });
+        //Listener for save button. Helper class is used to change the fragment
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,11 +80,13 @@ public class FragmentGraph extends Fragment {
         return inflater.inflate(R.layout.fragment_graph, container, false);
 
     }
+    //Helper class to extend AppCompatActivity
     class HelperClass extends AppCompatActivity implements OnChartGestureListener, OnChartValueSelectedListener{
         private static final String TAG = "fragment_graph";
         private LineChart mChart;
 
         public HelperClass(View view){
+            //Chart settings
             mChart = (LineChart) view.findViewById(R.id.lineChart);
             mChart.setOnChartGestureListener(FragmentGraph.HelperClass.this);
             mChart.setDragEnabled(true);
@@ -92,35 +95,35 @@ public class FragmentGraph extends Fragment {
             ArrayList<Entry> yValues = new ArrayList<>();
             ArrayList<String[]> values = GD.getDaysList();
             int index = 0;
+            //Looping through input values and setting the y-value
             for(String[] days : values){
                 yValues.add(new Entry(index,Float.valueOf(days[0])));
                 index++;
             }
-
+            //Used sensor information from GraphData class
             LineDataSet set1 = new LineDataSet(yValues, GraphData.getInstance().getSensor());
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.add(set1);
             LineData data = new LineData(dataSets);
             data.setDrawValues(false);
-
+            //Axis and chart settings
             YAxis leftAxis = mChart.getAxisLeft();
             leftAxis.removeAllLimitLines();
             leftAxis.enableGridDashedLine(10f,10f,0);
             leftAxis.setDrawLimitLinesBehindData(true);
             leftAxis.setTextSize(15);
-
             set1.setFillAlpha(110);
             set1.setColor(Color.RED);
             set1.setLineWidth(3f);
-
             mChart.getAxisRight().setEnabled(false);
             mChart.setData(data);
-
+            //Looping through input data. Date strings are copied to the graph
             String[] values2 = new String[values.size()];
             for(int k = 0; k<values2.length;k++){
                 String[] tempStr = values.get(k);
                 values2[k]=tempStr[1];
             }
+            //Values for x-axis
             XAxis xAxis = mChart.getXAxis();
             xAxis.setValueFormatter(new MyAxisValueFormatter(values2));
             xAxis.setGranularity(1);
@@ -130,61 +133,40 @@ public class FragmentGraph extends Fragment {
 
         }
 
-        public LineChart getLineChart(){
-            return mChart;
-        }
-
+        //Overridemethods becouse of implementation
+        @Override
+        public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) { }
 
         @Override
-        public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-
-        }
+        public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) { }
 
         @Override
-        public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-
-        }
+        public void onChartLongPressed(MotionEvent me) { }
 
         @Override
-        public void onChartLongPressed(MotionEvent me) {
-
-        }
+        public void onChartDoubleTapped(MotionEvent me) { }
 
         @Override
-        public void onChartDoubleTapped(MotionEvent me) {
-
-        }
+        public void onChartSingleTapped(MotionEvent me) { }
 
         @Override
-        public void onChartSingleTapped(MotionEvent me) {
-
-        }
+        public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) { }
 
         @Override
-        public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
-
-        }
+        public void onChartScale(MotionEvent me, float scaleX, float scaleY) { }
 
         @Override
-        public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-
-        }
+        public void onChartTranslate(MotionEvent me, float dX, float dY) { }
 
         @Override
-        public void onChartTranslate(MotionEvent me, float dX, float dY) {
-
-        }
+        public void onValueSelected(Entry e, Highlight h) { }
 
         @Override
-        public void onValueSelected(Entry e, Highlight h) {
-
-        }
-
-        @Override
-        public void onNothingSelected() {
-
-        }
+        public void onNothingSelected() { }
     }
+    //This class is used to format the x-axis values.
+    //Axis values are originally float values, but as the
+    //x-axis contains date values, float values are replaced with String date values
     public class MyAxisValueFormatter extends ValueFormatter{
         private String[] mValues;
 
@@ -199,9 +181,13 @@ public class FragmentGraph extends Fragment {
 
             }catch(IndexOutOfBoundsException e){
                 System.out.println("Exception: "+e);
-            }return "virhe";
+                //In case of IndexOutOfBounds, text error is set to x-axis
+            }return "error";
         }
     }
+    //This class is needed to change the fragment
+    //FragmentHelperClass extends the Fragment class, which is needed to do the fragment change
+    //Class contains two methods, one for save button and one for back button
     class FragmentHelperClass extends Fragment{
 
         public void ChangeFragmentBack(FragmentTransaction fragmentTransaction) {
