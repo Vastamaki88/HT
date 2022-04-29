@@ -21,28 +21,21 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.Locale;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentSettings#newInstance} factory method to
- * create an instance of this fragment.
- */
+//This class contains functionality for changing the language
 public class FragmentSettings extends Fragment {
     Spinner spinner;
 
 
-    // TODO: Rename and change types and number of parameters
     public static FragmentSettings newInstance(String param1, String param2) {
         FragmentSettings fragment = new FragmentSettings();
-        Bundle args = new Bundle();
         return fragment;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        //Spinner for choosing the language is initialized
         spinner = this.getView().findViewById(R.id.spinner_languages);
-        //ArrayAdapter<String> adapter = r.setSpinner1();
         ArrayList<String> kielet = new ArrayList<>();
         Context context = ContextClass.getInstance().getContext();
         kielet.add(getString(R.string.languages_fin));
@@ -55,7 +48,7 @@ public class FragmentSettings extends Fragment {
                 ||SettingsClass.getInstance().getLanguage().equals("Suomi")){
             spinner.setSelection(0);
         }
-
+        //Listener for the spinner to perform the language change
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

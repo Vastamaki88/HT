@@ -12,11 +12,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+//This class is called from Statistics fragment
+//Input values to this class are DayObjects, and it returns number as String
 public class ProcessData {
     private static ProcessData instance = null;
-    private HashMap<String, result> resultHM;
-    private result r;
+    private HashMap<String, Result> resultHM;
+    private Result res;
 
     private ProcessData(){
         resultHM = new HashMap<>();
@@ -27,44 +28,52 @@ public class ProcessData {
             instance = new ProcessData();
         }return instance;
     }
-    public void GetCumulativeCasesCount(ArrayList<ThlObjects.ThlObject.Children> list, String ID, TextView t) {
-        r = new result(t);
+    //Input parameters are list of THL-day objects, ID number, and textview, which is asking for the result
+    public void GetCumulativeCasesCount(ArrayList<ThlObjects.ThlObject.Children> daysLlist, String ID, TextView t) {
+        //New result object is created to store values
+        res = new Result(t);
+        //Asukasmäärä cant be used in this case
         if(StatisticsData.getInstance().getSensor().equals("Asukaslukumäärä")){
-            r.setResultToView("-");
+            res.setResultToView("-");
             return;
         }
+        //If hashmap of results does already contain this id, result object is set to the id
         if (resultHM.containsKey(ID)) {
             resultHM.get(ID).setResultToView();
             return;
+            //Otherwise new ID is added
         } else {
-            resultHM.put(ID, r);
+            resultHM.put(ID, res);
+            //DaysList is looped through in thread, and fetchData method is called for each element
             new Thread(new Runnable() {
                 public void run() {
-                    for (ThlObjects.ThlObject.Children c : list) {
+                    for (ThlObjects.ThlObject.Children c : daysLlist) {
                         ThlApi.getInstance().fetchData(c.getSid(), ID);
                     }
                 }
             }).start();
         }
     }
+    //Total cases gets the sum of all reported cases
     public void getCasesTotal(TextView t, String ID){
         ThlApi.getInstance().fetchData("509030",ID);
         if(!resultHM.containsKey(ID)) {
-            resultHM.put(ID, new result(t));
+            resultHM.put(ID, new Result(t));
         }
     }
-
+    //This method is called from API-class, when the HTTP-call results have been received
+    //result strings are set to result object
     public void Handle(String ID, String resultStr){
-            result r_day = resultHM.get(ID);
+            Result r_day = resultHM.get(ID);
             r_day.addResult(sumValues(resultStr));
             r_day.setResultToView();
     }
-
-    class result{
+    //This class is used to store THL data, and for some dataprocessing
+    class Result{
         int result;
         boolean ready;
         TextView t;
-        public result(TextView t){
+        public Result(TextView t){
             this.result = 0;
             this.ready = false;
             this.t = t;
@@ -72,54 +81,41 @@ public class ProcessData {
         public void addResult(int i){
             result+= i;
         }
-        public boolean isReady(){
-            return ready;
-        }
-        public int getResult(){
-            return result;
-        }
+        //Result is set to specific TextView component
         public void setResultToView(){
             this.t.setText(String.valueOf(result));
         }
-        public void setToReady(){
-            this.ready = true;
-        }
+        //Same method with different parameters
         public void setResultToView(String res){
             this.t.setText(res);
         }
     }
-
+    //This method processes the JSON data and calculates value of specific numbers
     public int sumValues(String data) {
         int palautus = 0;
-        JsonObject valueJson = null;
         String value = null;
         String pvm = null;
         try{
+            //"dataset" and "value" objects are searched from data
             JSONObject JObject = new JSONObject(data).getJSONObject("dataset").getJSONObject("value");
+            //Array is fromed
             JSONArray JArr = JObject.names();
-            String value2 = JArr.getString(JArr.length()-1);
-            value = JObject.getString(value2);
+            //Last element of array contains the needed value
+            String valueTemp = JArr.getString(JArr.length()-1);
+            value = JObject.getString(valueTemp);
+            //Dots are cleaned
+            value = value.replace(".","");
 
         }catch (Exception e){
             System.out.println("Arvoa ei löytynyt: vihe :"+e);
         }
-        try {
-            pvm = new Gson().fromJson(data, JsonObject.class)
-                    .getAsJsonObject().get("dataset")
-                    .getAsJsonObject().get("dimension")
-                    .getAsJsonObject().get("dateweek20200101")
-                    .getAsJsonObject().get("category")
-                    .getAsJsonObject().get("label").toString().replace("\"", "");
-
-        }catch (Exception e){
-            System.out.println("Arvoa ei löytynyt: vihe :"+e);
-        }
-
         if(value != null){
-            palautus = Integer.parseInt(value);
-        }
-        if(palautus == 0){
-            System.out.println("palautus 0 ------" + pvm );
+            try{
+                palautus = Integer.parseInt(value);
+            }catch (Exception e){
+                System.out.println("Error: "+ e);
+                palautus = 0;
+            }
         }
            return palautus;
     }

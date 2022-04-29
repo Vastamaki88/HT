@@ -22,6 +22,7 @@ import com.example.harjoitustyo.Graph.FragmentGraphMain;
 import com.example.harjoitustyo.Graph.FragmentGraphRecycler;
 import com.example.harjoitustyo.Graph.FragmentGraphSave;
 import com.example.harjoitustyo.Graph.SavedGraphs;
+import com.example.harjoitustyo.THL.FilterEnum;
 import com.example.harjoitustyo.THL.ThlApiCommands;
 import com.example.harjoitustyo.THL.ThlObjects;
 import com.google.android.material.navigation.NavigationView;
@@ -39,16 +40,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
+//The main class of program
+//Main objective of this class is to manage the functioning of navigation drawer
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Context is stored to ContextClass for future usage
         ContextClass.getInstance().setContext(this);
         SavedGraphs savedGraphs = SavedGraphs.getInstance();
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     new FragmentMain()).commit();
             navigationView.setCheckedItem(R.id.main);
         }
-
+        //THL API Commands are initialized
         ThlApiCommands thlApiCmnds = new ThlApiCommands();
         if(!ThlObjects.getInstance().isInitialized()){
             thlApiCmnds.fetchData();
@@ -106,13 +107,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void sleep(int MS){
-        try {
-            Thread.sleep(MS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+
+    //This method is used to change language
     public void changeLanguageClicked() {
         SettingsClass.getInstance().changed = false;
         Locale myLocale = new Locale(SettingsClass.getInstance().getLanguage());

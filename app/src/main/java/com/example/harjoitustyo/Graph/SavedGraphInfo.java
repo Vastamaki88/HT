@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.example.harjoitustyo.R;
 
-
+//This class offers functionality after selecting a CardView
 public class SavedGraphInfo extends Fragment {
     Button backButton;
     Button openButton;
@@ -29,6 +29,7 @@ public class SavedGraphInfo extends Fragment {
         openButton = this.getView().findViewById(R.id.SavedGraphInfo_open);
         GraphData GD = GraphData.getInstance();
 
+        //Listeners for both buttons to change fragment
         openButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,7 +54,6 @@ public class SavedGraphInfo extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -62,6 +62,7 @@ public class SavedGraphInfo extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_saved_graph_info, container, false);
     }
+    //Helper class to change fragment
     class FragmentHelperClass extends Fragment{
 
         public void ChangeFragmentBack(FragmentTransaction fragmentTransaction) {

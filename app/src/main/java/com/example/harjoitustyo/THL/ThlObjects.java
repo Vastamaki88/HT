@@ -2,7 +2,8 @@ package com.example.harjoitustyo.THL;
 
 import java.util.ArrayList;
 
-
+//Class for creating Objects from THL data
+//This class is used for both THL filters and actual data
 public class ThlObjects {
     private static ThlObjects instance = null;
     private ArrayList<ThlObject>thlObjects;
@@ -19,7 +20,7 @@ public class ThlObjects {
     public boolean isInitialized(){
         return initialized;
     }
-
+    //ThlObjects class contains a list of ThlObject
     public void insertThlObject(ThlObject o){
         thlObjects.add(o);
         initialized = true;
@@ -31,6 +32,7 @@ public class ThlObjects {
         return thlObjects.get(i);
     }
 
+    //This is actual class for THL data
     public class ThlObject{
         String id;
         String label;
@@ -40,6 +42,10 @@ public class ThlObjects {
             return children;
         }
 
+        //Children class contains ArrayList<Children>
+        //which means that it can call itself
+        //There can be many layers in the THL data, and this class
+        //will call itself as many time as needed
         public class Children{
             String id;
             String sid;

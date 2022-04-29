@@ -1,7 +1,7 @@
 package com.example.harjoitustyo;
 
 import android.content.Context;
-
+//This class is used to store context
 public class ContextClass {
     Context context;
     public static ContextClass instance = null;

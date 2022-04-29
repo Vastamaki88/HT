@@ -21,11 +21,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-
+//This class contains list of saved datasets used for drawing graph
+//Saved datasets are stored to device as JSON data. The data
+//is read when the program starts, and saved data is set to objects in this class
 public class SavedGraphs {
     private static SavedGraphs instance = null;
     ArrayList<Graph> dataSetList = new ArrayList<>();
-
+    //Constructur calls the readFile method to retrieve the saved data
     private SavedGraphs() {
         readFile();
     }
@@ -36,20 +38,13 @@ public class SavedGraphs {
         }
         return instance;
     }
-    public void getGraphListStr(){
-        ArrayList<String>listC = new ArrayList<>();
-        for(Graph g : dataSetList){
-            listC.add(g.getFilename());
-        }
-    }
-
+    //Adds new graph to list of graphs
     public void addItem(Graph graph) {
         dataSetList.add(graph);
     }
+    //Reads the saved data from the file
     public void readFile(){
         String output="";
-        File path = ContextClass.getInstance().getContext().getFilesDir();
-        String pathStr = path.toString()+"/SavedGraphs";
         try{
             InputStream inputStream = ContextClass.getInstance().getContext().openFileInput("SavedGraphs");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -57,31 +52,36 @@ public class SavedGraphs {
             while((s= bufferedReader.readLine())!=null){
                 output+=s;
             }
-            Gson gson = new Gson();
             inputStream.close();
+            //Gson library is used to form a object
+            Gson gson = new Gson();
             JsonStreamParser jsonStreamParser = new JsonStreamParser(output);
             JsonObject jsonObject = new JsonObject();
+            //Data is looped through
             while(jsonStreamParser.hasNext()){
+                //Individual elements are formed from the data
                 JsonElement element = jsonStreamParser.next();
                 jsonObject = element.getAsJsonObject();
                 String jsonStr = jsonObject.toString();
+                //New graph object is created
                 Graph graph = gson.fromJson(jsonStr,Graph.class);
                 dataSetList.add(graph);
             }
 
         }catch (IOException e){
-            Log.e("IOException","Virhe tiedoston tallennuksessa");
+            Log.e("IOException","Error reading the file");
         }finally{
 
         }
     }
+    //Is used to write graph data to file
     public void writeFile(Graph graph){
         File path = null;
         path = ContextClass.getInstance().getContext().getFilesDir();
-        String output="";
         Gson gson = new Gson();
         String json = gson.toJson(graph);
         try{
+            //Writer appends the data, so old data won't get lost
             FileOutputStream osw = new FileOutputStream(new File(path, "SavedGraphs"),true);
             osw.write(json.getBytes());
             osw.close();
@@ -90,6 +90,7 @@ public class SavedGraphs {
         }
     }
 }
+//This class is used to form Graph objects
 class Graph{
     private ArrayList<String[]>dataSet;
     private String dateStr;

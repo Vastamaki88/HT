@@ -17,7 +17,8 @@ import com.example.harjoitustyo.THL.ThlObjects;
 
 import java.util.ArrayList;
 
-
+//Statistics fragment shows figures from previous dates
+//and the filters that are used to get the data
 public class FragmentStatistics extends Fragment {
     TextView textViewCases7d;
     TextView textViewCases14d;
@@ -62,6 +63,7 @@ public class FragmentStatistics extends Fragment {
         casesInPrevDays(100,textViewCases100d);
         casesTotal(textViewCasesTotal);
 
+        //Button listener to change fragment
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,9 +73,7 @@ public class FragmentStatistics extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,10 +81,12 @@ public class FragmentStatistics extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_statistics, container, false);
     }
+    //This method is called, when it is needed to know the amount of cases in X days from now
     public void casesInPrevDays(int i, TextView textView) {
         ArrayList<ThlObjects.ThlObject.Children> ThlDayObjectList = DateClass.getInstance().getDaysFromNow(i);
         ProcessData.getInstance().GetCumulativeCasesCount(ThlDayObjectList, String.valueOf(IDClass.getInstance().getNewID()),textView);
     }
+    //This method returns the total number of cases
     public void casesTotal(TextView t){
         ProcessData.getInstance().getCasesTotal(t, String.valueOf(IDClass.getInstance().getNewID()));
     }

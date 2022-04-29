@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.harjoitustyo.R;
 
 import java.util.ArrayList;
-
+//Recycler View adaptar class for the recycler view
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private Context context;
     private ArrayList<Graph>dataSet;
@@ -35,10 +35,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
-
+        //Text values for the CardView are set here
         holder.textView1.setText(dataSet.get(position).getFilename());
         holder.textView2.setText(dataSet.get(position).getDate());
-
+        //Listener for the CardView to acces the CardView data
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +56,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView textView1, textView2;
         CardView cardView;
 
-
+        //Initializes components
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView1 = itemView.findViewById(R.id.textview_recycler_1);

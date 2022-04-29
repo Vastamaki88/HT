@@ -1,5 +1,5 @@
 package com.example.harjoitustyo;
-
+//Stores the language selection from settings fragment
 public class SettingsClass {
     private static SettingsClass instance = null;
     private String language = "English";

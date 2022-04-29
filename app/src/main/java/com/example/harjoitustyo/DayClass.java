@@ -6,17 +6,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
+//This class stores Week and DayList pairs in hashmap
 public class DayClass {
     private HashMap<String, List<Date>> weekDayPair;
-    private ThlObjects.ThlObject.Children day;
-    private String week;
-
 
     public DayClass(){
         weekDayPair = new HashMap<>();
     }
-
+    //Insert method for inserting week-dayList pairs
     public void insertDay(String weekNo, Date day){
         if(weekDayPair.containsKey(weekNo)){
             weekDayPair.get(weekNo).add(day);

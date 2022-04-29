@@ -96,7 +96,7 @@ public class ThlApiCommands {
                                 ThlObjects.ThlObject thlObject = gson.fromJson(objStr,ThlObjects.ThlObject.class);
                                 thlObjects.insertThlObject(thlObject);
                                 if(thlObjects.objectsCount()==5){
-                                    System.out.println("INITIALIZED");
+                                    //System.out.println("INITIALIZED");
                                 }
                             }
                         }

@@ -20,23 +20,20 @@ import com.example.harjoitustyo.THL.ThlFilterItems;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentFilters#newInstance} factory method to
- * create an instance of this fragment.
- */
+//This class is used to manage the filters dat are user
+//with THL api calls in the Statistics Fragment
 public class FragmentFilters extends Fragment {
     public enum filter{age, sex, region, city, sensor}
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Initializting components
         Spinner regionSpin;
         Spinner citySpin;
         Spinner ageSpin;
@@ -49,8 +46,7 @@ public class FragmentFilters extends Fragment {
         sexSpin = this.getView().findViewById(R.id.spinner_sex);
         sensorSpin = this.getView().findViewById(R.id.spinner_sensor);
         okButton = this.getView().findViewById(R.id.button_filter);
-
-
+        //Helper Class is used to initialize spinners
         helperClass hc = new helperClass();
         hc.setSpinner(regionSpin, this.getView(), filter.region.ordinal());
         hc.setSpinner(citySpin, this.getView(), filter.city.ordinal());
@@ -58,6 +54,7 @@ public class FragmentFilters extends Fragment {
         hc.setSpinner(sexSpin, this.getView(), filter.sex.ordinal());
         hc.setSpinner(sensorSpin, this.getView(), filter.sensor.ordinal());
 
+        //Listener for button. Spinner data is read at this point and sent to Statistics Data object
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,12 +64,13 @@ public class FragmentFilters extends Fragment {
                 SD.setRegion(regionSpin.getSelectedItem().toString());
                 SD.setSensor(sensorSpin.getSelectedItem().toString());
                 SD.setSex(sexSpin.getSelectedItem().toString());
-
+                //Helper Class is used to change the fragment
                 FragmentFilters.HelperClass2 HC2 =new FragmentFilters.HelperClass2();
                 HC2.changeFragment();
             }
         });
     }
+    //Helper Class for changing fragments
     class HelperClass2 extends AppCompatActivity{
         public void changeFragment(){
             FragmentTransaction fragmentTransaction = getActivity()
@@ -82,20 +80,13 @@ public class FragmentFilters extends Fragment {
         }
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static FragmentFilters newInstance(String param1, String param2) {
-        FragmentFilters fragment = new FragmentFilters();
-        Bundle args = new Bundle();
-
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_filters, container, false);
     }
 }
+//Helper Class to initialize spinners
 class helperClass extends Activity{
     public void setSpinner(Spinner spinner, View view, int ID){
         FragmentFilters.filter filterID = FragmentFilters.filter.values()[ID];

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 
 import com.example.harjoitustyo.ProcessData;
 import com.example.harjoitustyo.StatisticsData;
+import com.example.harjoitustyo.THL.FilterEnum;
 import com.example.harjoitustyo.THL.ThlFilterItems;
 import com.example.harjoitustyo.THL.ThlObjects;
 
@@ -15,29 +16,25 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-
+//This class uses retrieves the data from THL API
+//URL-address component are given to this class as parameter
+//and after task is completed, this class call the next method to be executed
 public class ThlApiGraph {
     private static ThlApiGraph instance;
-    private BufferedReader reader;
-    Boolean isRunning = false;
     private MyTask Task;
-    private ThlObjects thlObjects = ThlObjects.getInstance();
 
-    private ThlApiGraph(){
-        reader = null;
-    }
+    private ThlApiGraph(){ }
 
     public static ThlApiGraph getInstance(){
         if(instance == null){
             instance = new ThlApiGraph();
         }return instance;
     }
-    public boolean isRunnig(){
-        return isRunning;
-    }
 
-    //Starts the fetch process
+    //Starts the fetch process from THL
+    //As parameters are given list of days in a single string, and id for this current event
     public void fetchData(String daySids, String ID){
+        //Data for URL is retrieved from GraphData class
         ThlFilterItems THLItems = ThlFilterItems.getInstance();
         String sensor = GraphData.getInstance().getSensor();
         String age = GraphData.getInstance().getAge();
@@ -45,29 +42,29 @@ public class ThlApiGraph {
         String sex = GraphData.getInstance().getSex();
         String city = GraphData.getInstance().getCity();
 
+        //URL is formed
+        //If the user has not chosen a value, the value is set to empty
         sensor = "measure-"+THLItems.getSensorID(sensor)+".";
 
-        if(!sex.equals("Kaikki")){
-            sex = "&filter=sex-" + THLItems.getSexID(sex);
+        if(!sex.equals(FilterEnum.ALL.toString())){
+            sex = FilterEnum.SEX + THLItems.getSexID(sex);
         }else{
             sex = "";
         }
-
-        if(!age.equals("Kaikki")){
-                age = "&filter=ttr10yage-"+THLItems.getAgeID(age);
+        if(!age.equals(FilterEnum.ALL.toString())){
+                age = FilterEnum.AGE+THLItems.getAgeID(age);
             }else{
             age="";
-        }if(!region.equals("Kaikki")){
-            region = "&filter=hcdmunicipality2020-"+THLItems.getRegionID(region);
+        }if(!region.equals(FilterEnum.ALL.toString())){
+            region = FilterEnum.REGION+THLItems.getRegionID(region);
         }else{region="";}
-        if(!city.equals("Kaikki")){
-            city = "&filter=hcdmunicipality2020-"+THLItems.getCityID(city);
+        if(!city.equals(FilterEnum.ALL.toString())){
+            city = FilterEnum.CITY+THLItems.getCityID(city);
         }else{
             city="";
         }
-        isRunning = true;
-        String URLString = "";
-        URLString = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json?row=" +
+        //The final URL string if formed
+        String URLString = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json?row=" +
                 "dateweek20200101-"+ daySids +
                 "&column=" +
                 sensor+
@@ -75,7 +72,7 @@ public class ThlApiGraph {
                 city +
                 age+
                 sex;
-        System.out.println("URL TO SEARCH: "+URLString);
+        //System.out.println("URL TO SEARCH: "+URLString);
         Task = new MyTask();
         Task.execute(URLString,ID);
     }
@@ -122,6 +119,7 @@ public class ThlApiGraph {
         protected void onPostExecute(String result)
         {
             super.onPostExecute(result);
+            //Result is split to separate ID and JSON-data
             String[] resultArray = result.split("#StoreTaskId#");
             GraphData.getInstance().HandleData(resultArray[1]);
         }

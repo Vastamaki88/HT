@@ -50,6 +50,9 @@ public class FragmentGraph extends Fragment {
         saveButton = this.getView().findViewById(R.id.graph_save);
         //Data for the graph is stored in the GraphData class
         GD = GraphData.getInstance();
+        HelperClass HC = new HelperClass(this.getView());
+        LineChart lineChart = HC.getLineChart();
+        SavedGraphs savedGraphs = SavedGraphs.getInstance();
 
         //Listener for back button. Helper class is used to change the fragment
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +133,10 @@ public class FragmentGraph extends Fragment {
             xAxis.setLabelRotationAngle(15f);
             xAxis.setTextSize(10);
             xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+        }
 
+        public LineChart getLineChart(){
+            return mChart;
         }
 
         //Overridemethods becouse of implementation

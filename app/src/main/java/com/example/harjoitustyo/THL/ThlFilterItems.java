@@ -4,32 +4,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
-
+//This class contains all the filters which can be used
+//to limit the data. This class is initialized at the start up of th program
 public class ThlFilterItems {
     private static ThlFilterItems instance;
-    private ArrayList<String>regionsList;
-    private ArrayList<String>agesList;
-    private ArrayList<String>citiesList;
-    private ArrayList<String>sexesList;
-    private ArrayList<String>sensorsList;
-    private HashMap<String, String>regionsHM;
-    private HashMap<String, String>agesHM;
-    private HashMap<String, String>sexesHM;
-    private HashMap<String, String>sensorsHM;
-    private HashMap<String, String>citiesHM;
+    private ArrayList<String>regionsList = new ArrayList<>();
+    private ArrayList<String>agesList = new ArrayList<>();
+    private ArrayList<String>citiesList = new ArrayList<>();
+    private ArrayList<String>sexesList = new ArrayList<>();
+    private ArrayList<String>sensorsList = new ArrayList<>();
+    private HashMap<String, String>regionsHM = new HashMap<>();
+    private HashMap<String, String>agesHM = new HashMap<>();
+    private HashMap<String, String>sexesHM = new HashMap<>();
+    private HashMap<String, String>sensorsHM = new HashMap<>();
+    private HashMap<String, String>citiesHM = new HashMap<>();
 
     private ThlFilterItems(){
-        regionsHM = new HashMap<>();
-        agesHM = new HashMap<>();
-        sensorsHM = new HashMap<>();
-        citiesHM = new HashMap<>();
-        sexesHM = new HashMap<>();
-        regionsList = new ArrayList<>();
-        citiesList = new ArrayList<>();
-        agesList = new ArrayList<>();
-        sexesList = new ArrayList<>();
-        sensorsList = new ArrayList<>();
-
         regionsHM = getRegions();
         agesHM = getAge();
         sensorsHM = getSensors();
@@ -42,47 +32,37 @@ public class ThlFilterItems {
         sexesList = getList(sexesHM);
 
     }
-
+    //Getters
     public ArrayList<String> getRegionsList() {
         return regionsList;
     }
-
     public ArrayList<String> getAgesList() {
         return agesList;
     }
-
     public ArrayList<String> getCitiesList() {
         return citiesList;
     }
-
     public ArrayList<String> getSexesList() {
         return sexesList;
     }
-
     public ArrayList<String> getSensorsList() {
         return sensorsList;
     }
-
     public HashMap<String, String> getRegionsHM() {
         return regionsHM;
     }
-
     public HashMap<String, String> getAgesHM() {
         return agesHM;
     }
-
     public HashMap<String, String> getSexesHM() {
         return sexesHM;
     }
-
     public HashMap<String, String> getSensorsHM() {
         return sensorsHM;
     }
-
     public HashMap<String, String> getCitiesHM() {
         return citiesHM;
     }
-
     public String getRegionID(String region){
         return regionsHM.get(region);
     }
@@ -104,7 +84,7 @@ public class ThlFilterItems {
             instance = new ThlFilterItems();
         }return instance;
     }
-
+    //Returns HashMap of regions including region name and SID
     private HashMap<String, String> getRegions(){
         HashMap<String, String> regions = new HashMap();
         try{
@@ -117,6 +97,7 @@ public class ThlFilterItems {
         }
         return regions;
     }
+    //Returns HashMap of cities including city name and SID
     private HashMap<String, String> getCities(){
         HashMap<String, String> cities = new HashMap();
         try{
@@ -134,6 +115,7 @@ public class ThlFilterItems {
 
         return cities;
     }
+    //Returns HashMap of sensors including sensor name and SID
     private HashMap<String, String> getSensors(){
         HashMap<String, String> sensors = new HashMap();
         try{
@@ -149,6 +131,7 @@ public class ThlFilterItems {
 
         return sensors;
     }
+    //Returns HashMap of ages including age label and SID
     private HashMap<String, String> getAge(){
         HashMap<String, String> ages = new HashMap();
         try{
@@ -164,6 +147,7 @@ public class ThlFilterItems {
 
         return ages;
     }
+    //Returns HashMap of sexes including sex label and SID
     private HashMap<String, String> getSexes(){
         HashMap<String, String> sexes = new HashMap();
         try{
@@ -176,7 +160,7 @@ public class ThlFilterItems {
         }
         return sexes;
     }
-
+    //Method for moving HashMap values to ArrayList
     private ArrayList<String> getList(HashMap<String, String> HM){
         Set<String> keySet = HM.keySet();
         ArrayList<String>newList = new ArrayList<>(keySet);
@@ -184,6 +168,7 @@ public class ThlFilterItems {
         newList.add(0,"Kaikki");
         return newList;
     }
+    //Another method for moving HashMap values to ArrayList
     private ArrayList<String> getList2(HashMap<String, String> HM){
         Set<String> keySet = HM.keySet();
         ArrayList<String>newList = new ArrayList<>(keySet);
